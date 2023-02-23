@@ -21,7 +21,7 @@
         <div class="loader"></div>
     </div>
 @endif --}}
-
+<div class="loader"></div>
 @include('user.layouts.components.header')
 
 @yield('breadcrumb')

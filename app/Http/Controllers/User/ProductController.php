@@ -57,6 +57,16 @@ class ProductController extends Controller
         }
     }
 
+    public function getFilterProduct(Request $request)
+    {
+        $products = $this->productRepository->getProductsFilterPaginate($request, 24);
+        if (empty($products)) {
+            $products = $this->productRepository->getProductsPaginate($request, 24);
+            return view('user.products.list.index', compact('products'));
+        }
+        return view('user.products.list.index', compact('products'));
+    }
+
     public function getVariantPrice(Request $request)
     {
         $response = $this->productVariantService->handleVariantPrice($request->all());

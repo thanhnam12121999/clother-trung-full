@@ -47,20 +47,27 @@
             <span class="dropdown-item dropdown-header">{{ $unreadAdminNoti->count() }} Thông báo chưa đọc</span>
             <div class="dropdown-divider"></div>
             <div class="dropdown-divider"></div>
-            @foreach ($adminNoti as $noti)
-            <a data-link="{{ $noti->link }}" data-noti-id="{{ $noti->id }}" class="read-at dropdown-item py-2 px-2 @empty($noti->read_at) bg-info @endempty" style="cursor: pointer;">
-                <div class="row">
-                    <div class="col-2">
-                        <i class="fas fa-users mr-2"></i>
-                    </div>
-                    <div class="col-10">
-                        <p class="text-sm">{{ $noti->message }}</p>
-                        <p class="text-dark text-xs">{{ $noti->time }}</p>
-                    </div>
+            {{-- scroll infinite notifications --}}
+            <div class="infinite-scroll" style="height: 300px;width: 300px;overflow: scroll;">
+                <div class="content-load">
+                    @foreach ($adminNoti as $noti)
+                        <a data-link="{{ $noti->link }}" data-noti-id="{{ $noti->id }}" class="read-at dropdown-item py-2 px-2 @empty($noti->read_at) bg-info @endempty" style="cursor: pointer;">
+                            <div class="row">
+                                <div class="col-2">
+                                    <i class="fas fa-users mr-2"></i>
+                                </div>
+                                <div class="col-10">
+                                    <p class="text-sm">{{ $noti->message }}</p>
+                                    <p class="text-dark text-xs">{{ \Carbon\Carbon::parse($noti->time)->diffForHumans() }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                 
+                    @endforeach
+                    {{ $adminNoti->links('user.layouts.components.pagination') }}
                 </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            @endforeach
+            </div>
             {{-- <a href="#" class="dropdown-item">
                 <i class="fas fa-file mr-2"></i> 3 new reports
                 <span class="float-right text-muted text-sm">2 days</span>

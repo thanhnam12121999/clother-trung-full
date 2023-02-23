@@ -102,3 +102,13 @@ if (!function_exists('getCombinations')) {
     }
 }
 
+if (!function_exists('checkPermission')) {
+    function checkPermission($permission)
+    {
+        if (getLoggedInUser()->checkPermissionAccess($permission) || getAccountInfo()->hasRole('Admin')) {
+            return true;
+        }
+        return false;
+    }
+}
+

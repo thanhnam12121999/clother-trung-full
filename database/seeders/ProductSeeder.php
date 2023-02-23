@@ -31,17 +31,17 @@ class ProductSeeder extends Seeder
             ->has(ProductImage::factory()->count(rand(2,4)), 'images')
             ->create();
 
-        $attributeValues = AttributeValue::all();
+        // $attributeValues = AttributeValue::all();
 
-        $sizeAttributeValuesIds = $attributeValues->where('attribute_id', 1)->pluck('id');
-        $colorAttributeValuesIds = $attributeValues->where('attribute_id', 2)->pluck('id');
+        // $sizeAttributeValuesIds = $attributeValues->where('attribute_id', 1)->pluck('id');
+        // $colorAttributeValuesIds = $attributeValues->where('attribute_id', 2)->pluck('id');
 
-        Product::all()->each(function ($product) use ($sizeAttributeValuesIds, $colorAttributeValuesIds) {
-            $randomSize = $sizeAttributeValuesIds->random(rand(1,3));
-            $randomColor = $colorAttributeValuesIds->random(rand(1,3));
-            $product->attributes()->attach($randomSize->toArray());
-            $product->attributes()->attach($randomColor->toArray());
-        });
+        // Product::all()->each(function ($product) use ($sizeAttributeValuesIds, $colorAttributeValuesIds) {
+        //     $randomSize = $sizeAttributeValuesIds->random(rand(1,3));
+        //     $randomColor = $colorAttributeValuesIds->random(rand(1,3));
+        //     $product->attributes()->attach($randomSize->toArray());
+        //     $product->attributes()->attach($randomColor->toArray());
+        // });
 
         Schema::enableForeignKeyConstraints();
     }

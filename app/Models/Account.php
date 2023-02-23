@@ -17,7 +17,7 @@ class Account extends Authenticatable
     protected $table = "accounts";
     protected $guarded = "accounts";
     CONST NAME_ROLE_MANAGER = 'manager';
-    CONST NAME_ROLE_ADMIN = 'admin';
+    CONST NAME_ROLE_ADMIN = 1;
     CONST NAME_ROLE_STAFF = 'staff';
 
     protected $fillable = [
@@ -56,4 +56,12 @@ class Account extends Authenticatable
         return $this->morphTo();
     }
 
+    public function checkPermissionAccess($permissionName)
+    {
+        $roles = $this->accountable->roles;
+        if ($roles->hasPermission($permissionName)) {
+            return true;
+        }
+        return false;
+    }
 }

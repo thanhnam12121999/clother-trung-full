@@ -11,7 +11,7 @@
 
                         <h1 style="color: #2a2a2a">{{$slide->title}}</h1>
                         <p style="color: #d31010;">{!!$slide->content!!}</p>
-                        <a href="#" class="primary-btn">Mua Ngay</a>
+                        <a href="{{ route('products.index') }}" class="primary-btn">Mua Ngay</a>
                     </div>
                 </div>
                 <div class="off-card">

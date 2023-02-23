@@ -17,6 +17,17 @@ class NotificationRepository extends BaseRepository
         return $this->model->orderBy('created_at', 'DESC')->get();
     }
 
+    public function getNotificationByNotifiableId()
+    {
+        if (authCheck()) {
+            return $this->model->where('notifiable_id', getLoggedInUser()->id)
+            ->orderBy('created_at', 'DESC')
+            ->get();
+        }
+        return $this->model->orderBy('created_at', 'DESC')
+            ->get();
+    }
+    
     public function getMemberNotifies()
     {
         return $this->model->where('notifiable_id', getLoggedInUser()->id)

@@ -20,4 +20,14 @@ class AttributeValueRepository extends BaseRepository
     {
         return $this->model->whereIn('id', $productAttributes)->get();
     }
+
+    public function getAllAttributeValueSize()
+    {
+        return $this->model->where('attribute_id', AttributeValue::ATTRIBUTE_SIZE)->get();
+    }
+
+    public function getAllAttributeValueColor()
+    {
+        return $this->model->where('attribute_id', AttributeValue::ATTRIBUTE_COLOR)->get();
+    }
 }

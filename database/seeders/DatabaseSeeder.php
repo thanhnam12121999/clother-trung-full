@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             AttributeValueSeeder::class,
             CategorySeeder::class,
             ProductSeeder::class,
+            PermissionSeeder::class,
+            RoleSeeder::class,
             // AttributeProductSeeder::class,
             // ProductVariantSeeder::class,
             // ProductImageSeeder::class,

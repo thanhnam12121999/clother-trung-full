@@ -40,74 +40,74 @@
     {{--            </div>--}}
     {{--        </div>--}}
     {{--    </div>--}}
-    <div class="filter-widget">
-        <h4 class="fw-title">Giá</h4>
-        <div class="filter-range-wrap custom_filter-price-range">
-            <div class="range-slider custom_range-slider">
-                <div class="price-input custom_price-input">
-                    <input type="text" id="minamount">
-                    <input type="text" id="maxamount">
+    <form action="{{ route('products.filter') }}" method="get">
+        {!! csrf_field() !!}
+        <div class="filter-widget">
+            <h4 class="fw-title">Giá</h4>
+            <div class="filter-range-wrap custom_filter-price-range">
+                <div class="range-slider custom_range-slider">
+                    <div class="price-input custom_price-input">
+                        <input type="text" name="minamount" id="minamount">
+                        <input type="text" name="maxamount" id="maxamount">
+                    </div>
+                </div>
+                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                    data-min="50" data-max="500">
+                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                 </div>
             </div>
-            <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                 data-min="50" data-max="500">
-                <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+            <button type="submit" name="submit" class="filter-btn" style="border: 0">Lọc</button>
+        </div>
+        <div class="filter-widget">
+            <h4 class="fw-title">Màu sắc</h4>
+            <div class="fw-color-choose">
+                @if (!empty($attributeColor))
+                    @foreach ($attributeColor as $color)
+                        <div class="cs-item">
+                            <input type="radio" {{ request()->get('color') == $color->id ? 'checked' : '' }} name="color" value="{{$color->id}}">
+                            <label for="cs-red">{{$color->name}}</label>
+                        </div>
+                    @endforeach
+                @endif
+                {{-- <div class="cs-item">
+                    <input type="radio" id="cs-violet">
+                    <label class="cs-white" for="cs-white">Trắng</label>
+                </div>
+                <div class="cs-item">
+                    <input type="radio" id="cs-blue">
+                    <label class="cs-blue" for="cs-blue">Xanh</label>
+                </div>
+                <div class="cs-item">
+                    <input type="radio" id="cs-yellow">
+                    <label class="cs-yellow" for="cs-yellow">Vàng</label>
+                </div>
+                <div class="cs-item">
+                    <input type="radio" id="cs-red">
+                    <label class="cs-red" for="cs-red">Đỏ</label>
+                </div>
+                <div class="cs-item">
+                    <input type="radio" id="cs-green">
+                    <label class="cs-green" for="cs-green">Green</label>
+                </div> --}}
+
             </div>
         </div>
-        <a href="#" class="filter-btn">Lọc</a>
-    </div>
-    <div class="filter-widget">
-        <h4 class="fw-title">Màu sắc</h4>
-        <div class="fw-color-choose">
-            <div class="cs-item">
-                <input type="radio" id="cs-black">
-                <label class="cs-black" for="cs-black">Đen</label>
-            </div>
-            <div class="cs-item">
-                <input type="radio" id="cs-violet">
-                <label class="cs-white" for="cs-white">Trắng</label>
-            </div>
-            {{--            <div class="cs-item">--}}
-            {{--                <input type="radio" id="cs-blue">--}}
-            {{--                <label class="cs-blue" for="cs-blue">Xanh</label>--}}
-            {{--            </div>--}}
-            <div class="cs-item">
-                <input type="radio" id="cs-yellow">
-                <label class="cs-yellow" for="cs-yellow">Vàng</label>
-            </div>
-            <div class="cs-item">
-                <input type="radio" id="cs-red">
-                <label class="cs-red" for="cs-red">Đỏ</label>
-            </div>
-            {{--            <div class="cs-item">--}}
-            {{--                <input type="radio" id="cs-green">--}}
-            {{--                <label class="cs-green" for="cs-green">Green</label>--}}
-            {{--            </div>--}}
-        </div>
-    </div>
-    <div class="filter-widget">
-        <h4 class="fw-title">Size</h4>
-        <div class="fw-size-choose">
-            <div class="sc-item">
-                <input type="radio" id="s-size">
-                <label for="s-size">s</label>
-            </div>
-            <div class="sc-item">
-                <input type="radio" id="m-size">
-                <label for="m-size">m</label>
-            </div>
-            <div class="sc-item">
-                <input type="radio" id="l-size">
-                <label for="l-size">l</label>
-            </div>
-            <div class="sc-item">
-                <input type="radio" id="xs-size">
-                <label for="xs-size">xs</label>
+        <div class="filter-widget">
+            <h4 class="fw-title">Size</h4>
+            <div class="fw-size-choose">
+                @if (!empty($attributeSize))
+                    @foreach ($attributeSize as $size)
+                        <div class="sc-item">
+                            <input type="radio" {{ request()->get('size') == $size->id ? 'checked' : '' }} name="size" value="{{$size->id}}" id="{{$size->name}}-size">
+                            <label for="{{$size->name}}-size" class="{{request()->get('size') == $size->id ? 'active' : ''}}" >{{$size->name}}</label>
+                        </div>
+                    @endforeach
+                @endif
             </div>
         </div>
-    </div>
+    </form>
     {{--    <div class="filter-widget">--}}
     {{--        <h4 class="fw-title">Tags</h4>--}}
     {{--        <div class="fw-tags">--}}

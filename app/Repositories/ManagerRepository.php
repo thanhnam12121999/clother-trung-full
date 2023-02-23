@@ -18,7 +18,7 @@ class ManagerRepository extends BaseRepository
 
     public function getManagerByRole($role)
     {
-        return $this->model->where('role', 'LIKE', '%' . $role . '%')->get();
+        return $this->model->where('role', $role)->get();
         
     }
 } 

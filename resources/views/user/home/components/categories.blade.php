@@ -4,12 +4,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <div class="filter-control">
-                    <h2>Danh mục sản phẩm</h2>
+                    <h2 class="category-title" style="font-family: monospace">Danh mục sản phẩm</h2>
                 </div>
             </div>
             @if ($categories->isNotEmpty())
                 @foreach ($categories as $category)
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="single-banner h-100">
                             <img class="h-100 catalog-image" data-slug="{{ $category->slug }}"
                                 src="{{ $category->image_path }}" alt="">

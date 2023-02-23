@@ -36,7 +36,7 @@ class CartController extends Controller
                 toast($errorQuantity, 'error')->autoClose(3000);
                 return redirect()->back();
             }
-            toast('Vui lòng chọn thuộc tính sản phẩm', 'error')->autoClose(3000);
+            toast('Lỗi chọn thuộc tính sản phẩm hoặc sản phẩm đã hết', 'error')->autoClose(3000);
             return redirect()->back();
         }
         $response = $this->cartService->addCart($slug, $request->validated());

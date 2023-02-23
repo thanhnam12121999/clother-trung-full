@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MemberController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SlideController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Middleware\AuthLoginAdmin;
@@ -56,13 +57,13 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
      * Route product
      */
     Route::prefix('product')->group(function() {
-        Route::get('/', [ProductController::class, 'index'])->name('products.index');
-        Route::get('/create', [ProductController::class, 'create'])->name('products.form_create')->middleware('policyOfStaff');
-        Route::post('/create', [ProductController::class, 'store'])->name('products.create')->middleware('policyOfStaff');
-        Route::get('/view/{id}', [ProductController::class, 'show'])->name('products.show');
-        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit')->middleware('policyOfStaff');
-        Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update')->middleware('policyOfStaff');
-        Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('products.delete')->middleware('policyOfStaff');
+        Route::get('/', [ProductController::class, 'index'])->name('products.index')->middleware('permission:product-list');
+        Route::get('/create', [ProductController::class, 'create'])->name('products.form_create')->middleware('permission:product-add');
+        Route::post('/create', [ProductController::class, 'store'])->name('products.create')->middleware('permission:product-add');
+        Route::get('/view/{id}', [ProductController::class, 'show'])->name('products.show')->middleware('permission:product-show');;
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('products.edit')->middleware('permission:product-edit');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('products.update')->middleware('permission:product-edit');
+        Route::get('/delete/{id}', [ProductController::class, 'destroy'])->name('products.delete')->middleware('permission:product-delete');
 
         Route::resource('attributes', AttributeController::class)->only(['store', 'update', 'destroy'])->middleware('policyOfStaff');
         Route::group(['prefix' => 'variants', 'middleware' => 'policyOfStaff'], function() {
@@ -87,7 +88,13 @@ Route::middleware([AuthLoginAdmin::class])->group(function () {
         Route::get('/{order}', [OrderController::class, 'detail'])->name('orders.detail');
         Route::get('/{order}/update-status', [OrderController::class, 'updateStatus'])->name('orders.update-status');
     });
+    // Permission
+    Route::prefix('role')->group(function () {
+        Route::get('', [RoleController::class, 'index'])->name('role.index');
+        Route::get('/edit/{id}', [RoleController::class, 'getFormEdit'])->name('role.edit');
+        Route::put('/update/{id}', [RoleController::class, 'update'])->name('role.update');
+        Route::get('/create', [RoleController::class, 'create'])->name('role.form_create');
+        Route::post('/create', [RoleController::class, 'store'])->name('role.create');
+        Route::get('/delete/{id}', [RoleController::class, 'destroy'])->name('role.delete');
+    });
 });
-// Route::get('test', function () {
-//    return Hash::make(123456);
-// });

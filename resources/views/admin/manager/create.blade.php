@@ -70,13 +70,9 @@
                                     <label>Quyền<span class = "text-danger">(*)</span></label>
                                     <select class="form-control" data-placeholder="Chọn quyền" name="role">
                                         <option value="">Chọn quyền</option>
-                                        @if (getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN))
-                                            <option value="admin">Admin</option>
-                                            <option value="manager">Quản lý</option>
-                                        @endif
-                                        @if(getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_MANAGER) || getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN))
-                                            <option value="staff">Nhân viên</option>
-                                        @endif
+                                            @foreach ($roles as $role)
+                                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                            @endforeach
                                     </select>
                                 </div>
                                 @error('role')

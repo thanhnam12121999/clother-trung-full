@@ -36,10 +36,10 @@ class OrdersNotification extends Notification implements ShouldQueue
     private function setLinkAndMessage()
     {
         if ($this->forAdmin) {
-            $this->link = config("app.url") . "/admin/orders?id={$this->order->id}&status={$this->orderStatus}";
+            $this->link = url('/') . "/admin/orders?id={$this->order->id}&status={$this->orderStatus}";
         } else {
             // $this->link = config("app.url") . "/don-mua/{$this->order->id}?code={$this->order->order_code}&status={$this->orderStatus}";
-            $this->link = config("app.url") . "/don-mua";
+            $this->link = url('/') . "/don-mua";
         }
         switch ($this->orderStatus) {
             case Order::WAITING_CONFIRM_STATUS:

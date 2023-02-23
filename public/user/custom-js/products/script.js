@@ -34,6 +34,7 @@ $(function () {
         attrIds.sort()
         if (JSON.stringify(attributeIds) === JSON.stringify(attrIds)) {
             const productId = $('#productId').val()
+            $('.loader').css('display', 'block')
             $.ajax({
                 url: `${BASE_URL}product/get-variant-price`,
                 type: 'POST',
@@ -48,7 +49,46 @@ $(function () {
                 $('.page-details .product-details .pd-amount__text').html(`${result.variant_amount} sản phẩm có sẵn`)
                 $('.page-details .product-details #variantAmount').val(result.variant_amount)
                 $('.page-details .product-details #variantId').val(result.variant_id)
+            }).always(() => {
+                $('.loader').delay(1000)
+                    .queue(function (next) { 
+                        $(this).css('display', 'none'); 
+                        next(); 
+                    });
             })
         }
     })
+
+    //copy code stack overflow
+    var getUrlParameter = function getUrlParameter(sParam) {
+        var sPageURL = window.location.search.substring(1),
+            sURLVariables = sPageURL.split('&'),
+            sParameterName,
+            i;
+        for (i = 0; i < sURLVariables.length; i++) {
+            sParameterName = sURLVariables[i].split('=');
+
+            if (sParameterName[0] === sParam) {
+                return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+            }
+        }
+        return false;
+    };
+
+    var rangeSlider = $(".price-range"),
+        minamount = $("#minamount"),
+        maxamount = $("#maxamount"),
+        minamountParam = getUrlParameter('minamount'),
+        maxamountParam = getUrlParameter('maxamount');
+    if (!minamountParam || !maxamountParam) {
+        return;
+    } else if (minamountParam.includes('$') && maxamountParam.includes('$')) {
+        let minamountParamFormat = minamountParam.replace('$', '');
+        let maxamountParamFormat = maxamountParam.replace('$', '');
+        minamount.val('$' + minamountParamFormat);
+        maxamount.val('$' + maxamountParamFormat);
+        rangeSlider.slider({
+            values: [minamountParamFormat, maxamountParamFormat]
+        });
+    }
 })

@@ -40,6 +40,7 @@ Route::prefix('san-pham')->group(function () {
     Route::get('', [ProductController::class, 'index'])->name('products.index');
     Route::get('/{slug}', [ProductController::class, 'getItemBySlug'])->name('products.slug');
 });
+Route::get('/loc-san-pham', [ProductController::class, 'getFilterProduct'])->name('products.filter');
 Route::post('product/get-variant-price', [ProductController::class, 'getVariantPrice']);
 Route::get('gio-hang', [CartController::class, 'index'])->name('cart.index');
 Route::post('cart/add/{slug}', [CartController::class, 'add'])->name('cart.add');

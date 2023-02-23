@@ -29,6 +29,7 @@ class ManagerService extends BaseService
         try {
             DB::beginTransaction();
             $account = $this->accountRepository->find($id);
+            $manager_id = $account->accountable->id;
             $accountsData = $request->only(['name', 'email', 'username', 'phone_number', 'gender', 'date_of_birth']);
             if ($request->hasFile('avatar')) {
                 $response = $this->deleteImage($account->avatar, 'accounts');
@@ -43,6 +44,7 @@ class ManagerService extends BaseService
                 $accountsData['avatar'] = $newNameImage;
             }
             $this->accountRepository->update($id, $accountsData);
+            $this->managerRepository->update($manager_id, ['role' => $request->get('status')]);
             DB::commit();
             return $this->sendResponse('Sửa thành công.');
         } catch (\Exception $e) {
@@ -81,11 +83,13 @@ class ManagerService extends BaseService
             $manager = '';
             $accountsData = $request->only(['name', 'email', 'username', 'phone_number', 'gender', 'date_of_birth']);
             $avatarAccount = $request->file('avatar');
-            $newNameImage = $this->createImage($avatarAccount, 'accounts');
-            if (!$newNameImage) {
-                return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+            if (!empty($avatarAccount)) {
+                $newNameImage = $this->createImage($avatarAccount, 'accounts');
+                if (!$newNameImage) {
+                    return $this->sendError('Lỗi thêm ảnh đại diện, vui lòng thử lại', Response::HTTP_BAD_REQUEST);
+                }
+                $accountsData['avatar'] = $newNameImage;
             }
-            $accountsData['avatar'] = $newNameImage;
             $managerCheckExistRole = $this->managerRepository->getManagerByRole($request->role);
             if (!empty($managerCheckExistRole[0])) {
                 $manager = $managerCheckExistRole[0];

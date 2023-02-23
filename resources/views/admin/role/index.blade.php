@@ -2,12 +2,12 @@
 @section('custom-css')
     @include('admin.components.css.datatables')
 @endsection
-@section('breadcrumb', 'Quản Lý Nhân Viên')
-@section('active-manager', 'active')
+@section('active-role', 'active')
+@section('breadcrumb', 'Phân Quyền')
 @section('contents')
 <div class="breadcrumb">
     <div class="btn-add">
-        <a href="{{ route('admin.managers.form_create') }}" id="btn-form-add" class="btn btn-primary btn-sm" role="button">
+        <a href="{{ route('admin.role.form_create') }}" id="btn-form-add" class="btn btn-primary btn-sm" role="button">
             <span class="glyphicon glyphicon-plus"></span>Thêm Mới
         </a>
     </div>
@@ -18,44 +18,35 @@
             <div class="box" id="view">
                 <div class="box-header with-border">
                     <div class="box-body">
-                        <div class="row row-table"  data-url="list">
+                        <div class="row row-table">
                             <div id="render-list-product" style="width: 98%;margin: auto;">
                                 <div id="table-responsive1" class="table-responsive">
-                                    <table id="manager-list" class="table table-hover table-bordered table-content">
+                                    <table id="permission-list" class="table table-hover table-bordered table-content">
                                         <thead>
                                             <tr>
                                                 <th class="text-center">ID</th>
-                                                <th class="text-center">Avatar</th>
-                                                <th class="text-center">Họ Và Tên</th>
-                                                <th class="text-center">Quyền</th>
-                                                <th class="text-center">Email</th>
-                                                <th class="text-center">Phone</th>
+                                                <th class="text-center">Tên Vai Trò</th>
+                                                <th class="text-center">Mô Tả</th>
                                                 <th class="text-center">Thao Tác</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <form id="fixx" action="">
-                                                @foreach ($listStaffs as $staff)
-                                                {{-- @if (!empty($staff->accountable) && $staff->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF) --}}
-                                                <tr id="id-product">
-                                                    <td class="text-center">{{$staff->id}}</td>
+                                                @foreach ($roles as $role)
+                                                <tr>
+                                                    <td class="text-center">{{$role->id}}</td>
+                                                    <td class="text-center">{{$role->name}}</td>
+                                                    <td class="text-center">{{$role->display_name}}</td>
                                                     <td class="text-center">
-                                                        <img style="height: 50px;width: 70px;" src="{{ $staff->avatar_path }}" alt="">
-                                                    </td>
-                                                    <td class="text-center">{{$staff->name}} </td>
-                                                    <td class="text-center">{{$staff->accountable->role}}</td>
-                                                    <td class="text-center">{{$staff->email}}</td>
-                                                    <td class="text-center">{{$staff->phone_number}}</td>
-                                                    <td class="text-center">
-                                                        <a href="{{ route('admin.managers.edit', $staff->id) }}" type="button" url-update="update"
+                                                        <a type="button" href="{{ route('admin.role.edit', ['id'=>$role->id]) }}"
+                                                            data-url="up"
                                                             class="btn btn-success btn-xs btn-edit-product"><i class="fa fa-plus"
                                                                 aria-hidden="true"></i>Sửa</a>
-                                                        <a href="{{ route('admin.managers.delete', $staff->id) }}" type="button" data-url="delete"
-                                                            class="btn btn-danger btn-xs  btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                                                            Xóa</a>
+                                                        <button type="button" data-url="{{ route('admin.role.delete', $role->id) }}"
+                                                        class="btn btn-danger btn-xs btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                        Xóa</button>
                                                     </td>
                                                 </tr>
-                                                {{-- @endif --}}
                                                 @endforeach
                                             </form>
                                         </tbody>
@@ -71,6 +62,7 @@
 @endsection
 @section('custom-script')
     @include('admin.components.js.datatables')
+    <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
 @endsection
 @section('my-script')
     <script>
@@ -79,7 +71,7 @@
             //     "responsive": true, "lengthChange": false, "autoWidth": false,
             //     "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             //   }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-            $('#manager-list').DataTable({
+            $('#permission-list').DataTable({
                 "paging": true,
                 // "lengthChange": false,
                 // "searching": false,
@@ -87,6 +79,26 @@
                 "info": true,
                 "autoWidth": false,
                 "responsive": true,
+            });
+            $('.btn-delete').click(function (e) {
+                e.preventDefault();
+                let url = $(this).attr('data-url');
+                Swal.fire({
+                    title: 'Bạn chắc chắn muốn xóa vai trò này?',
+                    // text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCloseButton: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#42c119',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Xóa',
+                    cancelButtonText: 'Hủy'
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                })
             });
         });
     </script>

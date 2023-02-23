@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Permission extends Model
 {
     use HasFactory;
+
+    protected $table = 'permissions';
+    protected $guarded = [];
+
+    public function permissionsChildrent() 
+    {
+        return $this->hasMany(Permission::class, 'group');
+    }
 }

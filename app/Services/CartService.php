@@ -57,6 +57,7 @@ class CartService extends BaseService
                 $cartInstance = $this->cartRepository->getCartByMember(getAccountInfo()->id);
                 Cart::destroy();
                 Cart::add($cartItemData);
+                Cart::setTax(Cart::content()->first()->rowId, 1);
                 if (empty($cartInstance)) {
                     $subtotal = $data['quantity'] * $price;
                     $this->cartRepository->create([
@@ -82,6 +83,7 @@ class CartService extends BaseService
                 }
             } else {
                 Cart::add($cartItemData);
+                Cart::setTax(Cart::content()->first()->rowId, 1);
             }
             return $this->sendResponse('Đã thêm sản phẩm vào giỏ hàng');
         } catch (\Exception $e) {

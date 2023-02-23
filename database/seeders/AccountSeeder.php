@@ -25,7 +25,7 @@ class AccountSeeder extends Seeder
         DB::table('managers')->truncate();
 
         DB::table('managers')->insert([
-            'role' => 'admin',
+            'role' => 1,
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ]);

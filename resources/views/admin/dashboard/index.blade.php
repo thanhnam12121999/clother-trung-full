@@ -11,7 +11,7 @@
             <div class="info-box-content">
                 <span class="info-box-text">Thông Báo</span>
                 <span class="info-box-number">
-                {{ $adminNoti->count() }}
+                {{ $adminNoti->total() }}
                 {{-- <small>100</small> --}}
                 </span>
             </div>

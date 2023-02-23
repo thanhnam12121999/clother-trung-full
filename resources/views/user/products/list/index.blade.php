@@ -43,3 +43,7 @@
     </section>
     <!-- Product Shop Section End -->
 @endsection
+
+@section('custom-js')
+    <script src="{{ asset('user/custom-js/products/script.js') }}"></script>
+@endsection

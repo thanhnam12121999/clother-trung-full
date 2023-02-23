@@ -23,7 +23,7 @@ class ManagerFactory extends Factory
     public function definition()
     {
         return [
-            'role' => 'admin',
+            'role' => 1,//fix
             'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
             'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
         ];

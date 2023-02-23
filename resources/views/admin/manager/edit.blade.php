@@ -71,18 +71,14 @@
                                 @enderror
                                 <div class="form-group">
                                     @php
-                                        $seletedAdmin = $account->accountable->role == \App\Models\Manager::NAME_ROLE_ADMIN ? 'selected' : '';
-                                        $seletedManager = $account->accountable->role == \App\Models\Manager::NAME_ROLE_MANAGER ? 'selected' : '';
-                                        $selectedStaff = $account->accountable->role == \App\Models\Manager::NAME_ROLE_STAFF ? 'selected' : '';
                                         $disableSelect = getAccountInfo()->role == $account->accountable->role ? 'disabled' : '';
-                                        $disableAdmin = getAccountInfo()->role == \App\Models\Manager::NAME_ROLE_MANAGER ? 'disabled' : '';
                                     @endphp
                                     <label>Quyền</label>
                                     <select {{ $disableSelect }} name="status" class="form-control">
                                         <option value="">Chọn quyền</option>
-                                        <option {{ $seletedAdmin }} {{ $disableAdmin }} value="admin">Admin</option>
-                                        <option {{ $seletedManager }} value="manager">Quản lý</option>
-                                        <option {{ $selectedStaff }} value="staff">Nhân viên</option>
+                                        @foreach ($roles as $role)
+                                            <option {{$account->accountable->roles->id == $role->id ? 'selected' : ''}} value="{{$role->id}}">{{$role->name}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 @error('role')

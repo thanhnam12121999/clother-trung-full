@@ -213,7 +213,7 @@ ol {
 	background: #000;
 }
 
-.loader {
+/* .loader {
 	width: 40px;
 	height: 40px;
 	position: absolute;
@@ -224,7 +224,7 @@ ol {
 	border-radius: 60px;
 	animation: loader 0.8s linear infinite;
 	-webkit-animation: loader 0.8s linear infinite;
-}
+} */
 
 @keyframes loader {
 	0% {
@@ -999,7 +999,9 @@ ol {
 }
 
 .single-banner img {
+	max-height: 150px;
 	min-width: 100%;
+	object-fit: contain;
 }
 
 .single-banner .inner-text {
@@ -1230,6 +1232,10 @@ ol {
 	color: #252525;
 	display: block;
 	padding: 16px 18px 12px 19px;
+}
+
+.pi-pic {
+    min-height: 196px;
 }
 
 .product-item .pi-text {
@@ -1864,18 +1870,18 @@ ol {
 	margin-bottom: 4px;
 }
 
-.filter-widget .fw-color-choose .cs-item input {
+/* .filter-widget .fw-color-choose .cs-item input {
 	position: absolute;
 	visibility: hidden;
-}
+} */
 
-.filter-widget .fw-color-choose .cs-item label {
+/* .filter-widget .fw-color-choose .cs-item label {
 	cursor: pointer;
 	position: relative;
 	padding-left: 33px;
 	font-size: 16px;
 	color: #636363;
-}
+} */
 
 .filter-widget .fw-color-choose .cs-item label.cs-violet:before {
 	background: #8230E3;
@@ -1901,7 +1907,7 @@ ol {
     background: #f7f7f7;
 }
 
-.filter-widget .fw-color-choose .cs-item label:before {
+/* .filter-widget .fw-color-choose .cs-item label:before {
 	position: absolute;
 	left: 0;
 	top: 4px;
@@ -1910,7 +1916,7 @@ ol {
 	background: #252525;
 	border-radius: 50%;
 	content: "";
-}
+} */
 
 .filter-widget .fw-size-choose .sc-item {
 	display: inline-block;

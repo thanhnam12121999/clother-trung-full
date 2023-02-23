@@ -17,4 +17,5 @@
 <script src="{{ asset('adminlte/dist/js/pages/dashboard.js') }}"></script> --}}
 <script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script src="{{ asset('admin/script.js') }}"></script>
+<script src="//unpkg.com/jscroll/dist/jquery.jscroll.min.js"></script>
 @yield('my-script')

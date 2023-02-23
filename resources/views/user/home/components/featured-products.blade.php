@@ -10,7 +10,7 @@
             {{-- </div> --}}
             <div class="col-lg-12">
                 <div class="filter-control">
-                    <h2>Sản phẩm nổi bật</h2>
+                    <h2 style="font-family: monospace">Sản phẩm nổi bật</h2>
                 </div>
                 @if ($products->isNotEmpty())
                     <div class="product-slider owl-carousel">

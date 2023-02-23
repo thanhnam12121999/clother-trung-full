@@ -18,7 +18,7 @@
 {{--    </div>--}}
     <div class="product-list">
         <div class="row">
-            @if (!$products->total())
+            @if ($products && !$products->total())
                 <div class="col-12">
                     <h3 class="text-center">Không có sản phẩm nào</h3>
                 </div>

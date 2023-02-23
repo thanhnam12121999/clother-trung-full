@@ -90,6 +90,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{ route('admin.role.index') }}" class="nav-link @yield('active-role')">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Quản Lý Phân Quyền
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

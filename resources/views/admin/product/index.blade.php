@@ -7,7 +7,7 @@
 @section('breadcrumb', 'Sản Phẩm')
 @section('contents')
 <div class="breadcrumb">
-    @if (getAccountInfo()->role == \App\Models\Manager::NAME_ROLE_ADMIN || getAccountInfo()->role == \App\Models\Manager::NAME_ROLE_MANAGER)
+    @if (checkPermission('product-add'))
     <div class="btn-add">
         <a id="" href="{{ route('admin.products.form_create') }}" class="btn btn-primary btn-sm" role="button">
             <span class="glyphicon glyphicon-plus"></span>Thêm Mới
@@ -61,13 +61,17 @@
                                                 <td class="text-center">{{$product->created_at}}</td>
                                                 <td class="text-center">{{$product->updated_at}}</td>
                                                 <td class="text-center">
-                                                    <a href="{{ route('admin.products.show', $product->id) }}" type="button" class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Xem</a>
-                                                    @if (getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_ADMIN) || getAccountInfo()->role == (\App\Models\Manager::NAME_ROLE_MANAGER))
-                                                    <a href="{{ route('admin.products.edit', $product->id) }}" type="button"
-                                                    class="btn btn-success btn-xs btn-edit-psroduct"><i class="fa fa-plus"
-                                                        aria-hidden="true"></i>Sửa</a>
-                                                    <button data-url="{{ route('admin.products.delete', $product->id) }}" class="btn btn-danger btn-xs btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
-                                                    Xóa</button>
+                                                    @if (checkPermission('product-show'))
+                                                        <a href="{{ route('admin.products.show', $product->id) }}" type="button" class="btn btn-info btn-xs"><i class="fa fa-eye" aria-hidden="true"></i>Xem</a>
+                                                    @endif
+                                                    @if (checkPermission('product-edit'))
+                                                        <a href="{{ route('admin.products.edit', $product->id) }}" type="button"
+                                                        class="btn btn-success btn-xs btn-edit-psroduct"><i class="fa fa-plus"
+                                                            aria-hidden="true"></i>Sửa</a>
+                                                    @endif
+                                                    @if (checkPermission('product-delete'))
+                                                        <button data-url="{{ route('admin.products.delete', $product->id) }}" class="btn btn-danger btn-xs btn-delete"><i class="fa fa-trash" aria-hidden="true"></i>
+                                                            Xóa</button>
                                                     @endif
                                                 </td>
                                             </tr>

@@ -12,7 +12,7 @@ class Manager extends Model
     use SoftDeletes;
 
     CONST NAME_ROLE_MANAGER = 'manager';
-    CONST NAME_ROLE_ADMIN = 'admin';
+    CONST NAME_ROLE_ADMIN = 1;
     CONST NAME_ROLE_STAFF = 'staff';
     protected $table = "managers";
     protected $fillable = [
@@ -22,5 +22,20 @@ class Manager extends Model
     public function account()
     {
         return $this->morphOne(Account::class, 'accountable');
+    }
+
+    public function roles()
+    {
+        return $this->belongsTo(Role::class, 'role', 'id');
+    }
+
+    public function hasRole($name)
+    {
+        $roles = $this->roles;
+        if ($roles->name == $name) {
+            return true;
+        }
+        
+        return false;
     }
 }

@@ -12,6 +12,8 @@ class AttributeValue extends Model
     use HasFactory;
     use SoftDeletes;
 
+    CONST ATTRIBUTE_SIZE = 1;
+    CONST ATTRIBUTE_COLOR = 2;
     protected $table = "attribute_values";
     protected $fillable = [
         'attribute_id',

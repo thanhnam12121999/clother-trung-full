@@ -73,4 +73,29 @@ class ProductRepository extends BaseRepository
     {
         return ;
     }
+
+    public function getProductsFilterPaginate($request, $perPage = 10)
+    {
+        $query = $this->model;
+        if ($request->has('minamount') && $request->has('maxamount')) {
+            $minAmount = (int) str_replace('$', '', $request->get('minamount'));
+            $maxAmount = (int) str_replace('$', '', $request->get('maxamount'));
+            $query = $query->whereHas('variants', function ($query) use ($minAmount, $maxAmount) {
+                $query->whereBetween('unit_price', [$minAmount, $maxAmount]);
+            });
+        }
+        if ($request->has('size')) {
+            $size = $request->get('size');
+            $query = $query->whereHas('attributes', function ($query) use ($size) {
+                $query->where('attribute_value_id', $size);
+            });
+        }
+        if ($request->has('color')) {
+            $color = $request->get('color');
+            $query = $query->whereHas('attributes', function ($query) use ($color) {
+                $query->where('attribute_value_id', $color);
+            });
+        }
+        return $query->paginate($perPage);
+    }
 }
